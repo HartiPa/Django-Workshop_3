@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Room</title>
+</head>
+<body>
+    <h1>Edit Room: {{ room.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Room Name:</label>
+        <input type="text" id="name" name="name" value="{{ room.name }}" required><br>
+
+        <label for="capacity">Capacity:</label>
+        <input type="number" id="capacity" name="capacity" value="{{ room.capacity }}" required><br>
+
+        <h3>Equipment:</h3>
+        {% for equipment in equipments %}
+            <input type="checkbox" id="equipment_{{ equipment.id }}" name="equipments" value="{{ equipment.id }}"
+                   {% if equipment in room.equipments.all %}checked{% endif %}>
+            <label for="equipment_{{ equipment.id }}">{{ equipment.name }}</label><br>
+        {% endfor %}
+
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

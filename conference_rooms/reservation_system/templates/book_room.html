@@ -1,0 +1,24 @@
+{% extends 'web_parts/master.html' %}
+
+{% block title %}Book Room{% endblock %}
+
+{% block content %}
+<h1>Book Room: {{ room.name }}</h1>
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <label for="date">Reservation Date:</label>
+    <input type="date" id="date" name="date" required>
+    <button type="submit">Book</button>
+</form>
+<h2>Future Reservations</h2>
+<ul>
+    {% for reservation in reservations %}
+        <li>{{ reservation.date }}</li>
+    {% empty %}
+        <li>No reservations yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

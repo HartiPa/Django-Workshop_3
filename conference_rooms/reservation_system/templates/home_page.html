@@ -1,5 +1,47 @@
-{% extends "web_parts/master.html" %}
+{% extends 'web_parts/master.html' %}
+
+{% block title %}Home Page{% endblock %}
 
 {% block content %}
-<h1>Home page</h1>
+<h1>Conference Rooms</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Room Name</th>
+            <th>Capacity</th>
+            <th>Equipment</th>
+            <th>Reserved Today</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.name }}</td>
+            <td>{{ room.capacity }}</td>
+            <td>
+                {% if room.equipments.all %}
+                    {{ room.equipments.all|join:", " }}
+                {% else %}
+                    None
+                {% endif %}
+            </td>
+            <td>
+                {% if reservations|get:room.id %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'room_detail' room.id %}">Details</a> |
+                <a href="{% url 'edit_room' room.id %}">Edit</a> |
+                <a href="{% url 'delete_room' room.id %}">Delete Room</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'add_room' %}">Add Room</a>
 {% endblock %}
+

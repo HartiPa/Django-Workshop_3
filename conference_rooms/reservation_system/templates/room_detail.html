@@ -1,0 +1,28 @@
+{% extends 'web_parts/master.html' %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+
+<h1>{{ room.name }}</h1>
+<p>Capacity: {{ room.capacity }}</p>
+<h2>Equipment:</h2>
+<ul>
+    {% for equipment in room.equipments.all %}
+        <li>{{ equipment.name }}</li>
+    {% empty %}
+        <li>No equipment available.</li>
+    {% endfor %}
+</ul>
+<h2>Future Reservations</h2>
+<ul>
+    {% for reservation in reservations %}
+        <li>{{ reservation.date }}</li>
+    {% empty %}
+        <li>No reservations yet.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'book_room' room.id %}">Book Room</a>
+<a href="{% url 'edit_room' room.id %}">Edit Room</a>
+<a href="{% url 'delete_room' room.id %}">Delete Room</a>
+{% endblock %}

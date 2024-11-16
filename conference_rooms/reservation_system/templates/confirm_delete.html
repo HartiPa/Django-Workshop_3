@@ -1,0 +1,15 @@
+{% extends 'web_parts/master.html' %}
+
+{% block title %}Confirm Deletion{% endblock %}
+
+{% block content %}
+<h1>Confirm Deletion</h1>
+<p>Are you sure you want to delete the room <strong>{{ room.name }}</strong>?</p>
+<p>This action cannot be undone.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'room_detail' room.id %}">Cancel</a>
+</form>
+{% endblock %}
