@@ -3,15 +3,10 @@ from .models import *
 from django.contrib import messages
 
 
-from django.utils.timezone import now
-
 def home_page(request):
-    """
-    Displays all rooms with their reservation status for today.
-    """
     rooms = Room.objects.all()
     today = now().date()
-    reservations = {room.id: room.reservations.filter(date=today).exists() for room in rooms} if rooms else {}
+    reservations = {room.id: room.reservations.filter(date=today).exists() for room in rooms}
     return render(request, 'home_page.html', {'rooms': rooms, 'reservations': reservations})
 
 
@@ -94,4 +89,3 @@ def delete_room(request, room_id):
 
     # Zobrazení potvrzovací stránky
     return render(request, 'confirm_delete.html', {'room': room})
-
