@@ -1,3 +1,6 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render
 
-# Create your views here.
+
+def rooms(request):
+    return HttpResponse('This is home page of rooms')
