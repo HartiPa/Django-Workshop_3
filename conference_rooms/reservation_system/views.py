@@ -2,5 +2,5 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 
 
-def rooms(request):
-    return HttpResponse('This is home page of rooms')
+def home_page(request):
+    return render(request, 'home_page.html')
