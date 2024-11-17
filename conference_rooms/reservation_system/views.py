@@ -1,13 +1,23 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from django.contrib import messages
+import calendar
+from django.utils import timezone
+from datetime import datetime
 
 
 def home_page(request):
     rooms = Room.objects.all()
-    today = now().date()
-    reservations = {room.id: room.reservations.filter(date=today).exists() for room in rooms}
-    return render(request, 'home_page.html', {'rooms': rooms, 'reservations': reservations})
+    today = timezone.now().date()
+    # Vytvoříme seznam ID místností, které jsou dnes rezervované
+    reserved_room_ids = [
+        room.id for room in rooms if room.reservations.filter(today=today).exists()
+    ]
+    return render(request, 'home_page.html', {
+        'rooms': rooms,
+        'reserved_room_ids': reserved_room_ids
+    })
+
 
 
 def room_detail(request, room_id):

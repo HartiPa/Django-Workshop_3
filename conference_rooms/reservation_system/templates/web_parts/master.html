@@ -1,15 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="en">
-{% include 'web_parts/head.html' %}
-
+<head>
+    {% include 'web_parts/head.html' %}
+</head>
 <body>
-{% include 'web_parts/header.html' %}
-
-<main>
-  {% block content %}
-  {% endblock %}
-</main>
-
-{% include 'web_parts/footer.html' %}
+    {% include 'web_parts/header.html' %}
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+    {% include 'web_parts/footer.html' %}
 </body>
 </html>

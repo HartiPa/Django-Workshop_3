@@ -4,19 +4,56 @@
 
 {% block content %}
 <h1>Conference Rooms</h1>
-<ul>
-    {% for room in rooms %}
-        <li>
-            <strong>{{ room.name }}</strong> (Capacity: {{ room.capacity }})<br>
-            <strong>Equipment:</strong>
-            {% if room.equipments.all %}
-                {{ room.equipments.all|join:", " }}
-            {% else %}
-                None
-            {% endif %}
-            <br>
-            <a href="{% url 'room_detail' room.id %}">View Details</a>
-        </li>
+
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
     {% endfor %}
-</ul>
+  </ul>
+{% endif %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Room Name</th>
+            <th>Capacity</th>
+            <th>Equipment</th>
+            <th>Reserved Today</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.name }}</td>
+            <td>{{ room.capacity }}</td>
+            <td>
+                {% if room.equipments.all %}
+                    {{ room.equipments.all|join:", " }}
+                {% else %}
+                    None
+                {% endif %}
+            </td>
+            <td>
+                {% if room.id in reserved_room_ids %}
+                    Ano
+                {% else %}
+                    Ne
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'room_detail' room.id %}" class="btn">Detaily</a>
+                <a href="{% url 'edit_room' room.id %}" class="btn">Upravit</a>
+                <a href="{% url 'delete_room' room.id %}" class="btn">Smazat</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'add_room' %}" class="btn">Add Room</a>
+
+<!-- Zbytek vašeho obsahu -->
+
 {% endblock %}

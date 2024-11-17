@@ -1,7 +1,10 @@
+
 <header>
+    <h1>Conference Booking System</h1>
     <nav>
-        <nav>
-        {% include 'web_parts/navigation.html' %}
-        </nav>
+        <ul>
+            <li><a href="{% url 'home_page' %}">Home</a></li>
+            <li><a href="{% url 'add_room' %}">Add Room</a></li>
+        </ul>
     </nav>
 </header>
